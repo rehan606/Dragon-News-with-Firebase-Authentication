@@ -16,17 +16,17 @@ const AuthProvider = ({children}) => {
     // Create User 
     const createUser = (email, password)=>{
         return createUserWithEmailAndPassword(auth, email, password)
-    }
+    };
 
     // Signin user
     const signInUser = (email, password) =>{
         return signInWithEmailAndPassword(auth, email, password)
-    }
+    };
 
     // Sign Out USer
     const logOut = () =>{
         return signOut(auth)
-    }
+    };
 
     const authInfo = {
         user,
@@ -34,7 +34,7 @@ const AuthProvider = ({children}) => {
         createUser,
         logOut,
         signInUser,
-    }
+    };
 
     // Observer
     useEffect(()=> {

@@ -5,18 +5,24 @@ import { AuthContext } from '../provider/AuthProvider';
 const Login = () => {
 
     // SignIn User
-    const {signInUser, setUser} = useContext(AuthContext)
+    const {signInUser, setUser} = useContext(AuthContext);
 
     const handleLogin = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log({email, password})
         
         signInUser(email, password)
         .then(result => {
-            const user = result.user
-            setUser(user)
+            const user = result.user;
+            setUser(user);
+            alert('Login Successfully');
         })
         .catch(error => {
-            console.log('ERROR', error.message)
+            // console.log('ERROR', error.message)
+            alert(error.code);
         })
 
     }
