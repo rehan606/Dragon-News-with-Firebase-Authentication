@@ -16,7 +16,17 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end flex justify-end items-center gap-4">
-                <img src={userIcon} alt="" />
+
+                {
+                    user && user?.email ? 
+                    <div className=' flex items-center gap-3'> 
+                        <div className='w-10 h-10 rounded-full border'> <img src={user?.photoURL} alt="" className=' rounded-full ' /></div> 
+                        <span>{user.displayName}</span>
+                    </div> 
+                    : 
+                    <img src={userIcon} alt="" />
+                }
+                
                 {
                     user && user?.email ? 
                     (<Link onClick={logOut} className='px-8 py-2 text-white bg-[#D72050]'>Logout</Link> )

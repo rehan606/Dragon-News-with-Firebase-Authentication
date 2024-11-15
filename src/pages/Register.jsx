@@ -1,28 +1,44 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 
 const Register = () => {
 
     // Create user 
-    const {createUser, setUser} = useContext(AuthContext)
+    const {createUser, setUser,  updateUserProfile} = useContext(AuthContext)
+
+    // validation
+    const [formError, setFormError] = useState({})
+
+    // navigate for update user
+    const navigate = useNavigate()
 
     const handleCreateUser = (e) => {
         e.preventDefault();
 
         // Get Form Data
-        // const form = new FormData(e.target);
-        // const name = form.get("name");
-        // const photo = form.get("photo");
-        // const email = form.get("email");
-        // const password = form.get("password");
-        // console.log({name, photo, email, password });
+        const form = new FormData(e.target);
+        const name = form.get("name");
+        if(name.length < 5){
+            setFormError({...formError, name: "Must be more then 5 charecters or longer."});
+            return ;
+        }
+        const photo = form.get("photo");
+        const email = form.get("email");
+        const password = form.get("password");
+        console.log({name, photo, email, password });
 
         createUser(email, password)
         .then(result => {
             const user = result.user
             setUser(user)
-            console.log(user)
+            updateUserProfile({displayName:name, photoUrl:photo }) // update profile
+            .then(() => {
+                navigate("/")
+            })
+            .catch(error => {
+                console.log(error.message);
+            })
         })
         .catch(error => {
             console.log('ERROR', error.message)
@@ -45,6 +61,14 @@ const Register = () => {
                             </label>
                             <input type="text" name='name' placeholder="Name" className="input input-bordered" required />
                         </div>
+
+                        {
+                            formError.name && (
+                                <label className="label text-xs text-red-500">
+                                    Name Must be 5 charecter or longer.
+                                </label>
+                            )
+                        }
 
                         <div className="form-control">
                             <label className="label">

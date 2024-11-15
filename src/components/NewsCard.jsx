@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { CiBookmark, CiShare2 } from 'react-icons/ci';
 import { FaStar, FaEye, } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const NewsCard = ({ singleNews }) => {
     console.log(singleNews)
     const {
+        _id,
         author,
         title,
         rating,
@@ -23,12 +25,13 @@ const NewsCard = ({ singleNews }) => {
         return stars;
     };
 
-    const [showFullDetails, setShowFullDetails] = useState(false);
-    // Toggle function to show/hide full details
-    const toggleDetails = () => setShowFullDetails(!showFullDetails);
+    // Seemore 
+    // const [showFullDetails, setShowFullDetails] = useState(false);
+    // // Toggle function to show/hide full details
+    // const toggleDetails = () => setShowFullDetails(!showFullDetails);
 
-    // Display either first 10 words or full details based on state
-    const displayedDetails = showFullDetails ? details : details.split(' ').slice(0, 40).join(' ') + '...';
+    // // Display either first 10 words or full details based on state
+    // const displayedDetails = showFullDetails ? details : details.split(' ').slice(0, 40).join(' ') + '...';
 
 
     return (
@@ -65,14 +68,15 @@ const NewsCard = ({ singleNews }) => {
                         />
                     </div>
 
-                    {/* <p className="mt-4 text-sm text-gray-700 line-clamp-3">
-                        {details}
-                    </p> */}
-                    <p className="mt-4 text-sm text-gray-700">
+                    <p className="mt-4 text-sm text-gray-700 line-clamp-3">
+                        {details.slice(0, 200)}...{" "}
+                        <Link to={`/news/${_id}`}  className="text-red-500 font-semibold ml-2">Read more</Link>
+                    </p>
+                    {/* <p className="mt-4 text-sm text-gray-700">
                         {displayedDetails}
                         {!showFullDetails && <button onClick={toggleDetails} className="text-red-500 font-semibold ml-2">See more</button>}
                         {showFullDetails && <button onClick={toggleDetails} className="text-red-500 font-semibold ml-2">See less</button>}
-                    </p>
+                    </p> */}
 
                     <div className="mt-4 flex items-center justify-between text-gray-600 border-t py-4">
                         <div className="flex items-center space-x-1 ">
